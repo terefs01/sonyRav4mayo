@@ -8,16 +8,12 @@ const App = () => {
   const [activeTab, setActiveTab] = useState('portada');
 
   // =================================================================
-  // ⚙️ SECCIÓN DE CONFIGURACIÓN DE TUS ARCHIVOS (¡AQUÍ VAN TUS LINKS!)
+  // ⚙️ SECCIÓN DE CONFIGURACIÓN DE TUS ARCHIVOS
   // =================================================================
-  
-  // 1. Contraseña de acceso
   const CORRECT_PASSWORD = "RAV4"; 
 
-  // 2. Tus fotos del álbum (He colocado tu primera foto real en el número 1)
-  // Cuando tengas las otras, solo borra "URL_DE_TU_FOTO_X" y pega tus enlaces correspondientes.
   const FOTOS_ALBUM = [
-    "https://i.postimg.cc/021ZDjv8/nosotras.jpg", // Tu foto real 🎉
+    "https://i.postimg.cc/021ZDjv8/nosotras.jpg", 
     "URL_DE_TU_FOTO_2",
     "URL_DE_TU_FOTO_3",
     "URL_DE_TU_FOTO_4",
@@ -25,18 +21,13 @@ const App = () => {
     "URL_DE_TU_FOTO_6"
   ];
 
-  // 3. El enlace de tu video real (¡Ya configurado aquí!)
-  // RECUERDA: El video en YouTube debe estar configurado como "Oculto" (Unlisted), NO como "Privado".
   const VIDEO_URL = "https://www.youtube.com/watch?v=aLwJTY4hOZI"; 
 
   // =================================================================
-  // 🛠️ PROCESAMIENTO AUTOMÁTICO DE VIDEO E IMÁGENES
+  // 🛠️ PROCESAMIENTO DE URL
   // =================================================================
-  
   const getEmbedVideoUrl = (url: string) => {
     if (!url || url.includes("URL_DE_TU_VIDEO")) return null;
-    
-    // Convertir enlace de YouTube estándar o corto a formato de reproducción directo
     if (url.includes("youtube.com") || url.includes("youtu.be")) {
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
       const match = url.match(regExp);
@@ -44,10 +35,9 @@ const App = () => {
         return `https://www.youtube.com/embed/${match[2]}?autoplay=0&rel=0`;
       }
     }
-    // Convertir enlace de Vimeo
     if (url.includes("vimeo.com")) {
       const regExp = /vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)(?:$|\/|\?)/;
-      const match = match ? url.match(regExp) : null;
+      const match = url.match(regExp);
       if (match && match[3]) {
         return `https://player.vimeo.com/video/${match[3]}`;
       }
@@ -67,11 +57,11 @@ const App = () => {
     }
   };
 
-  // ESTILOS EN LÍNEA PARA EVITAR DEPENDER DE CONFIGURACIÓN DE TAILWIND EN STACKBLITZ
-  const styles = {
+  // TIPADO ESTRICTO COMO CSSPROPERTIES PARA EVITAR ERRORES DE TYPESCRIPT
+  const styles: { [key: string]: React.CSSProperties } = {
     loginBg: {
       minHeight: '100vh',
-      backgroundColor: '#0f172a', // slate-900
+      backgroundColor: '#0f172a',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -84,8 +74,8 @@ const App = () => {
       backgroundColor: '#ffffff',
       borderRadius: '16px',
       padding: '40px',
-      textAlign: 'center' as const,
-      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+      textAlign: 'center',
+      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
       borderTop: '8px solid #b08d57'
     },
     input: {
@@ -94,14 +84,14 @@ const App = () => {
       border: '1px solid #e2e8f0',
       borderRadius: '8px',
       outline: 'none',
-      textAlign: 'center' as const,
+      textAlign: 'center',
       fontSize: '16px',
       letterSpacing: '2px',
       marginBottom: '12px'
     },
     button: {
       width: '100%',
-      backgroundColor: '#1e293b', // slate-800
+      backgroundColor: '#1e293b',
       color: '#ffffff',
       padding: '12px',
       borderRadius: '8px',
@@ -119,7 +109,7 @@ const App = () => {
       paddingBottom: '120px'
     },
     nav: {
-      position: 'fixed' as const,
+      position: 'fixed',
       bottom: '24px',
       left: '50%',
       transform: 'translateX(-50%)',
@@ -135,20 +125,9 @@ const App = () => {
       zIndex: 50,
       boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)'
     },
-    navButton: (active: boolean) => ({
-      background: 'none',
-      border: 'none',
-      display: 'flex',
-      flexDirection: 'column' as const,
-      alignItems: 'center',
-      gap: '4px',
-      cursor: 'pointer',
-      color: active ? '#b08d57' : '#94a3b8',
-      transition: 'color 0.2s'
-    }),
     navLabel: {
       fontSize: '9px',
-      textTransform: 'uppercase' as const,
+      textTransform: 'uppercase',
       fontWeight: 'bold',
       letterSpacing: '0.5px'
     },
@@ -163,11 +142,11 @@ const App = () => {
       borderRadius: '12px',
       padding: '40px',
       boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
-      position: 'relative' as const,
-      textAlign: 'center' as const
+      position: 'relative',
+      textAlign: 'center'
     },
     goldBadge: {
-      position: 'absolute' as const,
+      position: 'absolute',
       top: '-14px',
       left: '50%',
       transform: 'translateX(-50%)',
@@ -177,7 +156,7 @@ const App = () => {
       borderRadius: '9999px',
       fontSize: '10px',
       fontWeight: 'bold',
-      textTransform: 'uppercase' as const,
+      textTransform: 'uppercase',
       letterSpacing: '1px'
     },
     gridItem: {
@@ -185,13 +164,13 @@ const App = () => {
       backgroundColor: '#f1f5f9',
       borderRadius: '16px',
       display: 'flex',
-      flexDirection: 'column' as const,
+      flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
       border: '4px solid #ffffff',
       boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
-      overflow: 'hidden' as const,
-      position: 'relative' as const
+      overflow: 'hidden',
+      position: 'relative'
     }
   };
 
@@ -204,7 +183,7 @@ const App = () => {
               <Lock style={{ width: '40px', height: '40px', color: '#b08d57' }} />
             </div>
           </div>
-          <h1 style={{ fontSize: '24px', fontFamily: '"Playfair Display", serif', fontWeight: 'bold', color: '#1e293b', marginBottom: '8px', textTransform: 'uppercase' as const }}>
+          <h1 style={{ fontSize: '24px', fontFamily: '"Playfair Display", serif', fontWeight: 'bold', color: '#1e293b', marginBottom: '8px', textTransform: 'uppercase' }}>
             Expediente Reservado
           </h1>
           <p style={{ color: '#94a3b8', marginBottom: '32px', fontStyle: 'italic', fontSize: '14px' }}>
@@ -231,29 +210,26 @@ const App = () => {
 
   return (
     <div style={styles.mainContainer}>
-      {/* MENÚ DE NAVEGACIÓN PREMIUM */}
       <nav style={styles.nav}>
-        <button onClick={() => setActiveTab('portada')} style={styles.navButton(activeTab === 'portada')}>
+        <button onClick={() => setActiveTab('portada')} style={{ background: 'none', border: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer', color: activeTab === 'portada' ? '#b08d57' : '#94a3b8' }}>
           <Folder style={{ width: '20px', height: '20px' }} />
           <span style={styles.navLabel}>Portada</span>
         </button>
-        <button onClick={() => setActiveTab('cartas')} style={styles.navButton(activeTab === 'cartas')}>
+        <button onClick={() => setActiveTab('cartas')} style={{ background: 'none', border: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer', color: activeTab === 'cartas' ? '#b08d57' : '#94a3b8' }}>
           <Heart style={{ width: '20px', height: '20px' }} />
           <span style={styles.navLabel}>Amor</span>
         </button>
-        <button onClick={() => setActiveTab('album')} style={styles.navButton(activeTab === 'album')}>
+        <button onClick={() => setActiveTab('album')} style={{ background: 'none', border: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer', color: activeTab === 'album' ? '#b08d57' : '#94a3b8' }}>
           <ImageIcon style={{ width: '20px', height: '20px' }} />
           <span style={styles.navLabel}>Álbum</span>
         </button>
-        <button onClick={() => setActiveTab('video')} style={styles.navButton(activeTab === 'video')}>
+        <button onClick={() => setActiveTab('video')} style={{ background: 'none', border: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer', color: activeTab === 'video' ? '#b08d57' : '#94a3b8' }}>
           <PlayCircle style={{ width: '20px', height: '20px' }} />
           <span style={styles.navLabel}>Video</span>
         </button>
       </nav>
 
-      {/* CONTENIDO PRINCIPAL */}
       <main style={styles.contentArea}>
-        
         {activeTab === 'portada' && (
           <div style={styles.card}>
             <div style={{ position: 'absolute', top: 0, right: 0, padding: '16px', borderLeft: '1px solid #f1f5f9', borderBottom: '1px solid #f1f5f9', fontSize: '10px', fontFamily: 'monospace', color: '#cbd5e1' }}>
@@ -267,7 +243,7 @@ const App = () => {
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <div>
-                <h3 style={{ fontSize: '10px', color: '#94a3b8', fontWeight: 'bold', marginBottom: '4px', textTransform: 'uppercase' as const, letterSpacing: '2px' }}>
+                <h3 style={{ fontSize: '10px', color: '#94a3b8', fontWeight: 'bold', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '2px' }}>
                   Titular del Logro
                 </h3>
                 <p style={{ fontSize: '24px', fontFamily: '"Playfair Display", serif', fontStyle: 'italic', color: '#334155' }}>
@@ -275,10 +251,10 @@ const App = () => {
                 </p>
               </div>
               <div style={{ backgroundColor: '#f8fafc', padding: '24px', borderRadius: '12px', borderLeft: '4px solid #b08d57', display: 'inline-block', margin: '0 auto', width: '100%', maxWidth: '380px' }}>
-                <p style={{ fontSize: '10px', fontWeight: 'bold', color: '#94a3b8', marginBottom: '4px', textTransform: 'uppercase' as const }}>
+                <p style={{ fontSize: '10px', fontWeight: 'bold', color: '#94a3b8', marginBottom: '4px', textTransform: 'uppercase' }}>
                   Estado de la Misión:
                 </p>
-                <p style={{ fontSize: '18px', fontWeight: 'bold', color: '#1e293b', textTransform: 'uppercase' as const, letterSpacing: '1px' }}>
+                <p style={{ fontSize: '18px', fontWeight: 'bold', color: '#1e293b', textTransform: 'uppercase', letterSpacing: '1px' }}>
                   Victoria Absoluta
                 </p>
               </div>
@@ -295,7 +271,7 @@ const App = () => {
               <p>Te miro y no solo veo a la mujer que amo, veo a la mujer que admiro profundamente. Alguien que no espera que las puertas se abran, sino que construye sus propios caminos.</p>
               <p>Este espacio es para recordarte que cada kilómetro que recorras en tu nueva RAV4 es una extensión de tu brillo. Estás diseñada para cosas grandes.</p>
             </div>
-            <p style={{ marginTop: '48px', textAlign: 'right', fontWeight: 'bold', color: '#b08d57', letterSpacing: '2px', textTransform: 'uppercase' as const }}>
+            <p style={{ marginTop: '48px', textAlign: 'right', fontWeight: 'bold', color: '#b08d57', letterSpacing: '2px', textTransform: 'uppercase' }}>
               — Hecho está.
             </p>
           </div>
@@ -312,10 +288,10 @@ const App = () => {
                       <img 
                         src={foto} 
                         alt={`Momento ${i + 1}`} 
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' as const }}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       />
                     ) : (
-                      <div style={{ padding: '20px', textAlign: 'center' as const, color: '#cbd5e1' }}>
+                      <div style={{ padding: '20px', textAlign: 'center', color: '#cbd5e1' }}>
                         <ImageIcon style={{ width: '32px', height: '32px', color: '#cbd5e1', margin: '0 auto 8px auto' }} />
                         <span style={{ fontSize: '10px', color: '#94a3b8', display: 'block' }}>Espacio para foto {i + 1}</span>
                       </div>
@@ -324,7 +300,7 @@ const App = () => {
                 );
               })}
             </div>
-            <div style={{ padding: '40px 0', textAlign: 'center' as const }}>
+            <div style={{ padding: '40px 0', textAlign: 'center' }}>
               <p style={{ fontFamily: '"Playfair Display", serif', fontStyle: 'italic', color: '#64748b' }}>
                 "Cada foto es un fragmento de la historia que seguimos manejando juntas."
               </p>
@@ -344,9 +320,9 @@ const App = () => {
                   allowFullScreen
                 ></iframe>
               ) : (
-                <div style={{ textAlign: 'center' as const, color: '#ffffff', padding: '20px' }}>
+                <div style={{ textAlign: 'center', color: '#ffffff', padding: '20px' }}>
                   <PlayCircle style={{ width: '80px', height: '80px', color: 'rgba(255, 255, 255, 0.4)', margin: '0 auto 16px auto' }} />
-                  <p style={{ fontSize: '12px', letterSpacing: '1px', textTransform: 'uppercase' as const, color: '#94a3b8' }}>
+                  <p style={{ fontSize: '12px', letterSpacing: '1px', textTransform: 'uppercase', color: '#94a3b8' }}>
                     Aquí aparecerá tu video cuando configures la URL
                   </p>
                 </div>
@@ -362,11 +338,11 @@ const App = () => {
                   “Este momento no necesita edición ni filtros. Lo que ves aquí es exactamente lo que eres: alguien que merece que la vida le traiga cosas grandes, conducidas con amor, y con quien quiero recorrer cada kilómetro que venga.”
                 </p>
                 <div style={{ height: '1px', backgroundColor: '#f1f5f9', width: '96px', margin: '0 auto' }}></div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: '#0f172a', fontWeight: 'bold', letterSpacing: '2px', textTransform: 'uppercase' as const, fontSize: '14px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: '#0f172a', fontWeight: 'bold', letterSpacing: '2px', textTransform: 'uppercase', fontSize: '14px' }}>
                   <CheckCircle style={{ width: '20px', height: '20px', color: '#22c55e' }} />
                   Archivo cerrado. Caso resuelto. ♡
                 </div>
-                <p style={{ fontSize: '12px', color: '#94a3b8', textTransform: 'uppercase' as const, letterSpacing: '1px' }}>
+                <p style={{ fontSize: '12px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px' }}>
                   Sello de autenticidad: Con todo mi corazón.
                 </p>
               </div>
