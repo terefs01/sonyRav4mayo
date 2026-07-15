@@ -127,7 +127,7 @@ const App = () => {
     },
     navLabel: {
       fontSize: '9px',
-      textTransform: 'uppercase',
+      textTransform: 'uppercase' as const,
       fontWeight: 'bold',
       letterSpacing: '0.5px'
     },
@@ -156,7 +156,7 @@ const App = () => {
       borderRadius: '9999px',
       fontSize: '10px',
       fontWeight: 'bold',
-      textTransform: 'uppercase',
+      textTransform: 'uppercase' as const,
       letterSpacing: '1px'
     },
     gridItem: {
@@ -183,7 +183,7 @@ const App = () => {
               <Lock style={{ width: '40px', height: '40px', color: '#b08d57' }} />
             </div>
           </div>
-          <h1 style={{ fontSize: '24px', fontFamily: '"Playfair Display", serif', fontWeight: 'bold', color: '#1e293b', marginBottom: '8px', textTransform: 'uppercase' }}>
+          <h1 style={{ fontSize: '24px', fontFamily: '"Playfair Display", serif', fontWeight: 'bold', color: '#1e293b', marginBottom: '8px', textTransform: 'uppercase' as const }}>
             Expediente Reservado
           </h1>
           <p style={{ color: '#94a3b8', marginBottom: '32px', fontStyle: 'italic', fontSize: '14px' }}>
@@ -243,7 +243,7 @@ const App = () => {
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <div>
-                <h3 style={{ fontSize: '10px', color: '#94a3b8', fontWeight: 'bold', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '2px' }}>
+                <h3 style={{ fontSize: '10px', color: '#94a3b8', fontWeight: 'bold', marginBottom: '4px', textTransform: 'uppercase' as const, letterSpacing: '2px' }}>
                   Titular del Logro
                 </h3>
                 <p style={{ fontSize: '24px', fontFamily: '"Playfair Display", serif', fontStyle: 'italic', color: '#334155' }}>
@@ -251,10 +251,10 @@ const App = () => {
                 </p>
               </div>
               <div style={{ backgroundColor: '#f8fafc', padding: '24px', borderRadius: '12px', borderLeft: '4px solid #b08d57', display: 'inline-block', margin: '0 auto', width: '100%', maxWidth: '380px' }}>
-                <p style={{ fontSize: '10px', fontWeight: 'bold', color: '#94a3b8', marginBottom: '4px', textTransform: 'uppercase' }}>
+                <p style={{ fontSize: '10px', fontWeight: 'bold', color: '#94a3b8', marginBottom: '4px', textTransform: 'uppercase' as const }}>
                   Estado de la Misión:
                 </p>
-                <p style={{ fontSize: '18px', fontWeight: 'bold', color: '#1e293b', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                <p style={{ fontSize: '18px', fontWeight: 'bold', color: '#1e293b', textTransform: 'uppercase' as const, letterSpacing: '1px' }}>
                   Victoria Absoluta
                 </p>
               </div>
@@ -271,7 +271,7 @@ const App = () => {
               <p>Te miro y no solo veo a la mujer que amo, veo a la mujer que admiro profundamente. Alguien que no espera que las puertas se abran, sino que construye sus propios caminos.</p>
               <p>Este espacio es para recordarte que cada kilómetro que recorras en tu nueva RAV4 es una extensión de tu brillo. Estás diseñada para cosas grandes.</p>
             </div>
-            <p style={{ marginTop: '48px', textAlign: 'right', fontWeight: 'bold', color: '#b08d57', letterSpacing: '2px', textTransform: 'uppercase' }}>
+            <p style={{ marginTop: '48px', textAlign: 'right', fontWeight: 'bold', color: '#b08d57', letterSpacing: '2px', textTransform: 'uppercase' as const }}>
               — Hecho está.
             </p>
           </div>
@@ -288,10 +288,10 @@ const App = () => {
                       <img 
                         src={foto} 
                         alt={`Momento ${i + 1}`} 
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' as const }}
                       />
                     ) : (
-                      <div style={{ padding: '20px', textAlign: 'center', color: '#cbd5e1' }}>
+                      <div style={{ padding: '20px', textAlign: 'center' as const, color: '#cbd5e1' }}>
                         <ImageIcon style={{ width: '32px', height: '32px', color: '#cbd5e1', margin: '0 auto 8px auto' }} />
                         <span style={{ fontSize: '10px', color: '#94a3b8', display: 'block' }}>Espacio para foto {i + 1}</span>
                       </div>
@@ -300,7 +300,7 @@ const App = () => {
                 );
               })}
             </div>
-            <div style={{ padding: '40px 0', textAlign: 'center' }}>
+            <div style={{ padding: '40px 0', textAlign: 'center' as const }}>
               <p style={{ fontFamily: '"Playfair Display", serif', fontStyle: 'italic', color: '#64748b' }}>
                 "Cada foto es un fragmento de la historia que seguimos manejando juntas."
               </p>
@@ -320,9 +320,9 @@ const App = () => {
                   allowFullScreen
                 ></iframe>
               ) : (
-                <div style={{ textAlign: 'center', color: '#ffffff', padding: '20px' }}>
+                <div style={{ textAlign: 'center' as const, color: '#ffffff', padding: '20px' }}>
                   <PlayCircle style={{ width: '80px', height: '80px', color: 'rgba(255, 255, 255, 0.4)', margin: '0 auto 16px auto' }} />
-                  <p style={{ fontSize: '12px', letterSpacing: '1px', textTransform: 'uppercase', color: '#94a3b8' }}>
+                  <p style={{ fontSize: '12px', letterSpacing: '1px', textTransform: 'uppercase' as const, color: '#94a3b8' }}>
                     Aquí aparecerá tu video cuando configures la URL
                   </p>
                 </div>
@@ -338,11 +338,11 @@ const App = () => {
                   “Este momento no necesita edición ni filtros. Lo que ves aquí es exactamente lo que eres: alguien que merece que la vida le traiga cosas grandes, conducidas con amor, y con quien quiero recorrer cada kilómetro que venga.”
                 </p>
                 <div style={{ height: '1px', backgroundColor: '#f1f5f9', width: '96px', margin: '0 auto' }}></div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: '#0f172a', fontWeight: 'bold', letterSpacing: '2px', textTransform: 'uppercase', fontSize: '14px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: '#0f172a', fontWeight: 'bold', letterSpacing: '2px', textTransform: 'uppercase' as const, fontSize: '14px' } as React.CSSProperties}>
                   <CheckCircle style={{ width: '20px', height: '20px', color: '#22c55e' }} />
                   Archivo cerrado. Caso resuelto. ♡
                 </div>
-                <p style={{ fontSize: '12px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                <p style={{ fontSize: '12px', color: '#94a3b8', textTransform: 'uppercase' as const, letterSpacing: '1px' }}>
                   Sello de autenticidad: Con todo mi corazón.
                 </p>
               </div>
