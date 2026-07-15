@@ -1,0 +1,680 @@
+import React, { useState } from 'react';
+import {
+  Lock,
+  Heart,
+  Folder,
+  PlayCircle,
+  Image as ImageIcon,
+  Award,
+  CheckCircle,
+} from 'lucide-react';
+
+const App = () => {
+  const [password, setPassword] = useState('');
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [error, setError] = useState('');
+  const [activeTab, setActiveTab] = useState('portada');
+
+  // =================================================================
+  // ⚙️ SECCIÓN DE CONFIGURACIÓN DE TUS ARCHIVOS (¡AQUÍ VAN TUS LINKS!)
+  // =================================================================
+
+  // 1. Contraseña de acceso
+  const CORRECT_PASSWORD = 'RAV4';
+
+  // 2. Tus fotos del álbum (He colocado tu primera foto real en el número 1)
+  // Cuando tengas las otras 2, solo borra "URL_DE_TU_FOTO_X" y pega tus enlaces correspondientes.
+  const FOTOS_ALBUM = [
+    'https://i.postimg.cc/021ZDjv8/nosotras.jpg', // Tu foto real 🎉
+    'https://i.postimg.cc/hty9yPk0/sushermanos.jpg',
+    'https://i.postimg.cc/c1BtkLY7/rav4.jpg',
+    'URL_DE_TU_FOTO_4',
+    'URL_DE_TU_FOTO_5',
+    'URL_DE_TU_FOTO_6',
+  ];
+
+  // 3. El enlace de tu video (Súbelo a YouTube como "Oculto" y pega aquí su enlace normal)
+  const VIDEO_URL = 'URL_DE_TU_VIDEO_YOUTUBE';
+
+  // =================================================================
+  // 🛠️ PROCESAMIENTO AUTOMÁTICO DE VIDEO E IMÁGENES
+  // =================================================================
+
+  const getEmbedVideoUrl = (url: string) => {
+    if (!url || url.includes('URL_DE_TU_VIDEO')) return null;
+
+    // Convertir enlace de YouTube estándar o corto a formato de reproducción directo
+    if (url.includes('youtube.com') || url.includes('youtu.be')) {
+      const regExp =
+        /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = url.match(regExp);
+      if (match && match[2].length === 11) {
+        return `https://www.youtube.com/embed/${match[2]}?autoplay=0&rel=0`;
+      }
+    }
+    // Convertir enlace de Vimeo
+    if (url.includes('vimeo.com')) {
+      const regExp =
+        /vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)(?:$|\/|\?)/;
+      const match = url.match(regExp);
+      if (match && match[3]) {
+        return `https://www.youtube.com/watch?v=aLwJTY4hOZI/${match[3]}`;
+      }
+    }
+    return url;
+  };
+
+  const embedVideoUrl = getEmbedVideoUrl(VIDEO_URL);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password.toUpperCase() === CORRECT_PASSWORD) {
+      setIsAuthorized(true);
+      setError('');
+    } else {
+      setError('Clave incorrecta. Pista: Tu nuevo compañero de caminos.');
+    }
+  };
+
+  // ESTILOS EN LÍNEA PARA EVITAR DEPENDER DE CONFIGURACIÓN DE TAILWIND EN STACKBLITZ
+  const styles = {
+    loginBg: {
+      minHeight: '100vh',
+      backgroundColor: '#0f172a', // slate-900
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '20px',
+      fontFamily: '"Montserrat", sans-serif',
+    },
+    loginCard: {
+      maxWidth: '400px',
+      width: '100%',
+      backgroundColor: '#ffffff',
+      borderRadius: '16px',
+      padding: '40px',
+      textAlign: 'center' as const,
+      boxShadow:
+        '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+      borderTop: '8px solid #b08d57',
+    },
+    input: {
+      width: '100%',
+      padding: '12px 16px',
+      border: '1px solid #e2e8f0',
+      borderRadius: '8px',
+      outline: 'none',
+      textAlign: 'center' as const,
+      fontSize: '16px',
+      letterSpacing: '2px',
+      marginBottom: '12px',
+    },
+    button: {
+      width: '100%',
+      backgroundColor: '#1e293b', // slate-800
+      color: '#ffffff',
+      padding: '12px',
+      borderRadius: '8px',
+      border: 'none',
+      fontWeight: 'bold',
+      letterSpacing: '2px',
+      cursor: 'pointer',
+      fontSize: '14px',
+    },
+    mainContainer: {
+      minHeight: '100vh',
+      backgroundColor: '#fcfbf9',
+      color: '#0f172a',
+      fontFamily: '"Montserrat", sans-serif',
+      paddingBottom: '120px',
+    },
+    nav: {
+      position: 'fixed' as const,
+      bottom: '24px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      backgroundColor: 'rgba(255, 255, 255, 0.9)',
+      backdropFilter: 'blur(8px)',
+      border: '1px solid #e2e8f0',
+      borderRadius: '9999px',
+      display: 'flex',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      padding: '12px 24px',
+      gap: '24px',
+      zIndex: 50,
+      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
+    },
+    navButton: (active: boolean) => ({
+      background: 'none',
+      border: 'none',
+      display: 'flex',
+      flexDirection: 'column' as const,
+      alignItems: 'center',
+      gap: '4px',
+      cursor: 'pointer',
+      color: active ? '#b08d57' : '#94a3b8',
+      transition: 'color 0.2s',
+    }),
+    navLabel: {
+      fontSize: '9px',
+      textTransform: 'uppercase' as const,
+      fontWeight: 'bold',
+      letterSpacing: '0.5px',
+    },
+    contentArea: {
+      maxWidth: '768px',
+      margin: '0 auto',
+      padding: '48px 24px',
+    },
+    card: {
+      backgroundColor: '#ffffff',
+      border: '1px solid #e2e8f0',
+      borderRadius: '12px',
+      padding: '40px',
+      boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+      position: 'relative' as const,
+      textAlign: 'center' as const,
+    },
+    goldBadge: {
+      position: 'absolute' as const,
+      top: '-14px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      backgroundColor: '#b08d57',
+      color: '#ffffff',
+      padding: '4px 16px',
+      borderRadius: '9999px',
+      fontSize: '10px',
+      fontWeight: 'bold',
+      textTransform: 'uppercase' as const,
+      letterSpacing: '1px',
+    },
+    gridItem: {
+      aspectRatio: '4/5',
+      backgroundColor: '#f1f5f9',
+      borderRadius: '16px',
+      display: 'flex',
+      flexDirection: 'column' as const,
+      alignItems: 'center',
+      justifyContent: 'center',
+      border: '4px solid #ffffff',
+      boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+      overflow: 'hidden' as const,
+      position: 'relative' as const,
+    },
+  };
+
+  if (!isAuthorized) {
+    return (
+      <div style={styles.loginBg}>
+        <div style={styles.loginCard}>
+          <div
+            style={{
+              marginBottom: '24px',
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <div
+              style={{
+                padding: '16px',
+                backgroundColor: '#fef3c7',
+                borderRadius: '50%',
+              }}
+            >
+              <Lock
+                style={{ width: '40px', height: '40px', color: '#b08d57' }}
+              />
+            </div>
+          </div>
+          <h1
+            style={{
+              fontSize: '24px',
+              fontFamily: '"Playfair Display", serif',
+              fontWeight: 'bold',
+              color: '#1e293b',
+              marginBottom: '8px',
+              textTransform: 'uppercase',
+            }}
+          >
+            Expediente Reservado
+          </h1>
+          <p
+            style={{
+              color: '#94a3b8',
+              marginBottom: '32px',
+              fontStyle: 'italic',
+              fontSize: '14px',
+            }}
+          >
+            "Para los ojos de quien ya es dueña del camino"
+          </p>
+
+          <form onSubmit={handleLogin}>
+            <input
+              type="password"
+              placeholder="Introduce la clave..."
+              style={styles.input}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {error && (
+              <p
+                style={{
+                  color: '#ef4444',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  marginBottom: '16px',
+                }}
+              >
+                {error}
+              </p>
+            )}
+            <button type="submit" style={styles.button}>
+              ABRIR ARCHIVO
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={styles.mainContainer}>
+      {/* MENÚ DE NAVEGACIÓN PREMIUM */}
+      <nav style={styles.nav}>
+        <button
+          onClick={() => setActiveTab('portada')}
+          style={styles.navButton(activeTab === 'portada')}
+        >
+          <Folder style={{ width: '20px', height: '20px' }} />
+          <span style={styles.navLabel}>Portada</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('cartas')}
+          style={styles.navButton(activeTab === 'cartas')}
+        >
+          <Heart style={{ width: '20px', height: '20px' }} />
+          <span style={styles.navLabel}>Amor</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('album')}
+          style={styles.navButton(activeTab === 'album')}
+        >
+          <ImageIcon style={{ width: '20px', height: '20px' }} />
+          <span style={styles.navLabel}>Álbum</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('video')}
+          style={styles.navButton(activeTab === 'video')}
+        >
+          <PlayCircle style={{ width: '20px', height: '20px' }} />
+          <span style={styles.navLabel}>Video</span>
+        </button>
+      </nav>
+
+      {/* CONTENIDO PRINCIPAL */}
+      <main style={styles.contentArea}>
+        {activeTab === 'portada' && (
+          <div style={styles.card}>
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                padding: '16px',
+                borderLeft: '1px solid #f1f5f9',
+                borderBottom: '1px solid #f1f5f9',
+                fontSize: '10px',
+                fontFamily: 'monospace',
+                color: '#cbd5e1',
+              }}
+            >
+              REF: RAV4-2026-FINAL-DOC
+            </div>
+            <Award
+              style={{
+                width: '64px',
+                height: '64px',
+                margin: '0 auto 32px auto',
+                color: '#b08d57',
+                opacity: 0.9,
+              }}
+            />
+            <h2
+              style={{
+                fontSize: '32px',
+                fontFamily: '"Playfair Display", serif',
+                fontWeight: 'bold',
+                color: '#1e293b',
+                marginBottom: '16px',
+              }}
+            >
+              EXPEDIENTE DE ÉXITO
+            </h2>
+            <div
+              style={{
+                height: '2px',
+                backgroundColor: '#b08d57',
+                width: '64px',
+                margin: '0 auto 40px auto',
+              }}
+            ></div>
+
+            <div
+              style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
+            >
+              <div>
+                <h3
+                  style={{
+                    fontSize: '10px',
+                    uppercase: true,
+                    tracking: '3px',
+                    color: '#94a3b8',
+                    fontWeight: 'bold',
+                    marginBottom: '4px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '2px',
+                  }}
+                >
+                  Titular del Logro
+                </h3>
+                <p
+                  style={{
+                    fontSize: '24px',
+                    fontFamily: '"Playfair Display", serif',
+                    fontStyle: 'italic',
+                    color: '#334155',
+                  }}
+                >
+                  La mujer de mi vida
+                </p>
+              </div>
+              <div
+                style={{
+                  backgroundColor: '#f8fafc',
+                  padding: '24px',
+                  borderRadius: '12px',
+                  borderLeft: '4px solid #b08d57',
+                  display: 'inline-block',
+                  margin: '0 auto',
+                  width: '100%',
+                  maxWidth: '380px',
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: '10px',
+                    fontWeight: 'bold',
+                    color: '#94a3b8',
+                    marginBottom: '4px',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  Estado de la Misión:
+                </p>
+                <p
+                  style={{
+                    fontSize: '18px',
+                    fontWeight: 'bold',
+                    color: '#1e293b',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                  }}
+                >
+                  Victoria Absoluta
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'cartas' && (
+          <div style={{ ...styles.card, textAlign: 'left' }}>
+            <p
+              style={{
+                fontFamily: '"Playfair Display", serif',
+                fontSize: '22px',
+                color: '#334155',
+                fontStyle: 'italic',
+                marginBottom: '32px',
+                borderBottom: '1px solid #f8fafc',
+                paddingBottom: '24px',
+                lineHeight: '1.6',
+              }}
+            >
+              ”...de las batallas ganadas y las que ya están ganadas sin
+              saberlo,”
+            </p>
+            <div
+              style={{
+                color: '#475569',
+                fontSize: '16px',
+                lineHeight: '1.8',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '20px',
+              }}
+            >
+              <p>
+                Te miro y no solo veo a la mujer que amo, veo a la mujer que
+                admiro profundamente. Alguien que no espera que las puertas se
+                abran, sino que construye sus propios caminos.
+              </p>
+              <p>
+                Este espacio es para recordarte que cada kilómetro que recorras
+                en tu nueva RAV4 es una extensión de tu brillo. Estás diseñada
+                para cosas grandes.
+              </p>
+            </div>
+            <p
+              style={{
+                marginTop: '48px',
+                textAlign: 'right',
+                fontWeight: 'bold',
+                color: '#b08d57',
+                letterSpacing: '2px',
+                textTransform: 'uppercase',
+              }}
+            >
+              — Hecho está.
+            </p>
+          </div>
+        )}
+
+        {activeTab === 'album' && (
+          <div>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+                gap: '16px',
+              }}
+            >
+              {FOTOS_ALBUM.map((foto, i) => {
+                const esUrlValida = foto.startsWith('http');
+                return (
+                  <div key={i} style={styles.gridItem}>
+                    {esUrlValida ? (
+                      <img
+                        src={foto}
+                        alt={`Momento ${i + 1}`}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                        }}
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          padding: '20px',
+                          textAlign: 'center',
+                          color: '#cbd5e1',
+                        }}
+                      >
+                        <ImageIcon
+                          style={{
+                            width: '32px',
+                            height: '32px',
+                            color: '#cbd5e1',
+                            margin: '0 auto 8px auto',
+                          }}
+                        />
+                        <span
+                          style={{
+                            fontSize: '10px',
+                            color: '#94a3b8',
+                            display: 'block',
+                          }}
+                        >
+                          Espacio para foto {i + 1}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            <div style={{ padding: '40px 0', textAlign: 'center' }}>
+              <p
+                style={{
+                  fontFamily: '"Playfair Display", serif',
+                  fontStyle: 'italic',
+                  color: '#64748b',
+                }}
+              >
+                "Cada foto es un fragmento de la historia que seguimos manejando
+                juntas."
+              </p>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'video' && (
+          <div
+            style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}
+          >
+            <div
+              style={{
+                aspectRatio: '16/9',
+                backgroundColor: '#0f172a',
+                borderRadius: '32px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: '8px solid #ffffff',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                overflow: 'hidden',
+                position: 'relative',
+              }}
+            >
+              {embedVideoUrl ? (
+                <iframe
+                  src={embedVideoUrl}
+                  title="Video del Evento"
+                  style={{ width: '100%', height: '100%', border: 'none' }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              ) : (
+                <div
+                  style={{
+                    textAlign: 'center',
+                    color: '#ffffff',
+                    padding: '20px',
+                  }}
+                >
+                  <PlayCircle
+                    style={{
+                      width: '80px',
+                      height: '80px',
+                      color: 'rgba(255, 255, 255, 0.4)',
+                      margin: '0 auto 16px auto',
+                    }}
+                  />
+                  <p
+                    style={{
+                      fontSize: '12px',
+                      letterSpacing: '1px',
+                      textTransform: 'uppercase',
+                      color: '#94a3b8',
+                    }}
+                  >
+                    Aquí aparecerá tu video cuando configures la URL
+                  </p>
+                </div>
+              )}
+            </div>
+
+            <div style={{ ...styles.card, padding: '40px' }}>
+              <div style={styles.goldBadge}>Conclusión del Registro</div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '24px',
+                  paddingTop: '16px',
+                }}
+              >
+                <p
+                  style={{
+                    color: '#334155',
+                    lineHeight: '1.7',
+                    fontSize: '18px',
+                    fontWeight: '500',
+                    fontStyle: 'italic',
+                  }}
+                >
+                  “Este momento no necesita edición ni filtros. Lo que ves aquí
+                  es exactamente lo que eres: alguien que merece que la vida le
+                  traiga cosas grandes, conducidas con amor, y con quien quiero
+                  recorrer cada kilómetro que venga.”
+                </p>
+                <div
+                  style={{
+                    height: '1px',
+                    backgroundColor: '#f1f5f9',
+                    width: '96px',
+                    margin: '0 auto',
+                  }}
+                ></div>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    color: '#0f172a',
+                    fontWeight: 'bold',
+                    letterSpacing: '2px',
+                    textTransform: 'uppercase',
+                    fontSize: '14px',
+                  }}
+                >
+                  <CheckCircle
+                    style={{ width: '20px', height: '20px', color: '#22c55e' }}
+                  />
+                  Archivo cerrado. Caso resuelto. ♡
+                </div>
+                <p
+                  style={{
+                    fontSize: '12px',
+                    color: '#94a3b8',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                  }}
+                >
+                  Sello de autenticidad: Con todo mi corazón.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+};
+
+export default App;
