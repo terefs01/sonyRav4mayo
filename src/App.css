@@ -78,6 +78,16 @@ const App = () => {
       boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
       borderTop: '8px solid #b08d57'
     },
+    loginIconContainer: {
+      marginBottom: '24px',
+      display: 'flex',
+      justifyContent: 'center'
+    },
+    loginIconCircle: {
+      padding: '16px',
+      backgroundColor: '#fef3c7',
+      borderRadius: '50%'
+    },
     loginTitle: {
       fontSize: '24px',
       fontFamily: '"Playfair Display", serif',
@@ -85,6 +95,12 @@ const App = () => {
       color: '#1e293b',
       marginBottom: '8px',
       textTransform: 'uppercase'
+    },
+    loginSub: {
+      color: '#94a3b8',
+      marginBottom: '32px',
+      fontStyle: 'italic',
+      fontSize: '14px'
     },
     input: {
       width: '100%',
@@ -96,6 +112,12 @@ const App = () => {
       fontSize: '16px',
       letterSpacing: '2px',
       marginBottom: '12px'
+    },
+    errorText: {
+      color: '#ef4444',
+      fontSize: '12px',
+      fontWeight: '600',
+      marginBottom: '16px'
     },
     button: {
       width: '100%',
@@ -153,6 +175,15 @@ const App = () => {
       position: 'relative',
       textAlign: 'center'
     },
+    cardLeft: {
+      backgroundColor: '#ffffff',
+      border: '1px solid #e2e8f0',
+      borderRadius: '12px',
+      padding: '40px',
+      boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+      position: 'relative',
+      textAlign: 'left'
+    },
     refBadge: {
       position: 'absolute',
       top: 0,
@@ -163,6 +194,12 @@ const App = () => {
       fontSize: '10px',
       fontFamily: 'monospace',
       color: '#cbd5e1'
+    },
+    goldDivider: {
+      height: '2px',
+      backgroundColor: '#b08d57',
+      width: '64px',
+      margin: '0 auto 40px auto'
     },
     goldBadge: {
       position: 'absolute',
@@ -175,8 +212,13 @@ const App = () => {
       borderRadius: '9999px',
       fontSize: '10px',
       fontWeight: 'bold',
-      textTransform: 'uppercase' as const,
+      textTransform: 'uppercase',
       letterSpacing: '1px'
+    },
+    gridContainer: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+      gap: '16px'
     },
     gridItem: {
       aspectRatio: '4/5',
@@ -191,6 +233,30 @@ const App = () => {
       overflow: 'hidden',
       position: 'relative'
     },
+    imgFull: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover'
+    },
+    albumPlaceholder: {
+      padding: '20px',
+      textAlign: 'center',
+      color: '#cbd5e1'
+    },
+    albumPlaceholderText: {
+      fontSize: '10px',
+      color: '#94a3b8',
+      display: 'block'
+    },
+    albumFooter: {
+      padding: '40px 0',
+      textAlign: 'center'
+    },
+    albumFooterText: {
+      fontFamily: '"Playfair Display", serif',
+      fontStyle: 'italic',
+      color: '#64748b'
+    },
     portadaSub: {
       fontSize: '10px',
       color: '#94a3b8',
@@ -198,6 +264,16 @@ const App = () => {
       marginBottom: '4px',
       textTransform: 'uppercase',
       letterSpacing: '2px'
+    },
+    portadaStateContainer: {
+      backgroundColor: '#f8fafc',
+      padding: '24px',
+      borderRadius: '12px',
+      borderLeft: '4px solid #b08d57',
+      display: 'inline-block',
+      margin: '0 auto',
+      width: '100%',
+      maxWidth: '380px'
     },
     portadaStateLabel: {
       fontSize: '10px',
@@ -221,6 +297,28 @@ const App = () => {
       letterSpacing: '2px',
       textTransform: 'uppercase'
     },
+    videoContainer: {
+      aspectRatio: '16/9',
+      backgroundColor: '#0f172a',
+      borderRadius: '32px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      border: '8px solid #ffffff',
+      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+      overflow: 'hidden',
+      position: 'relative'
+    },
+    videoIframe: {
+      width: '100%',
+      height: '100%',
+      border: 'none'
+    },
+    videoPlaceholder: {
+      textAlign: 'center',
+      color: '#ffffff',
+      padding: '20px'
+    },
     videoPlaceholderText: {
       fontSize: '12px',
       letterSpacing: '1px',
@@ -243,6 +341,54 @@ const App = () => {
       color: '#94a3b8',
       textTransform: 'uppercase',
       letterSpacing: '1px'
+    },
+    flexCol32: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '32px'
+    },
+    flexCol24: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '24px'
+    },
+    textTitle: {
+      fontSize: '32px',
+      fontFamily: '"Playfair Display", serif',
+      fontWeight: 'bold',
+      color: '#1e293b',
+      marginBottom: '16px'
+    },
+    portadaMainTitle: {
+      fontSize: '24px',
+      fontFamily: '"Playfair Display", serif',
+      fontStyle: 'italic',
+      color: '#334155'
+    },
+    cartaHeader: {
+      fontFamily: '"Playfair Display", serif',
+      fontSize: '22px',
+      color: '#334155',
+      fontStyle: 'italic',
+      marginBottom: '32px',
+      borderBottom: '1px solid #f8fafc',
+      paddingBottom: '24px',
+      lineHeight: '1.6'
+    },
+    cartaBody: {
+      color: '#475569',
+      fontSize: '16px',
+      lineHeight: '1.8',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '20px'
+    },
+    conclusionText: {
+      color: '#334155',
+      lineHeight: '1.7',
+      fontSize: '18px',
+      fontWeight: '500',
+      fontStyle: 'italic'
     }
   };
 
@@ -250,15 +396,15 @@ const App = () => {
     return (
       <div style={styles.loginBg}>
         <div style={styles.loginCard}>
-          <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'center' }}>
-            <div style={{ padding: '16px', backgroundColor: '#fef3c7', borderRadius: '50%' }}>
+          <div style={styles.loginIconContainer}>
+            <div style={styles.loginIconCircle}>
               <Lock style={{ width: '40px', height: '40px', color: '#b08d57' }} />
             </div>
           </div>
           <h1 style={styles.loginTitle}>
             Expediente Reservado
           </h1>
-          <p style={{ color: '#94a3b8', marginBottom: '32px', fontStyle: 'italic', fontSize: '14px' }}>
+          <p style={styles.loginSub}>
             "Para los ojos de quien ya es dueña del camino"
           </p>
           
@@ -270,7 +416,7 @@ const App = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            {error && <p style={{ color: '#ef4444', fontSize: '12px', fontWeight: '600', marginBottom: '16px' }}>{error}</p>}
+            {error && <p style={styles.errorText}>{error}</p>}
             <button type="submit" style={styles.button}>
               ABRIR ARCHIVO
             </button>
@@ -308,21 +454,21 @@ const App = () => {
               REF: RAV4-2026-FINAL-DOC
             </div>
             <Award style={{ width: '64px', height: '64px', margin: '0 auto 32px auto', color: '#b08d57', opacity: 0.9 }} />
-            <h2 style={{ fontSize: '32px', fontFamily: '"Playfair Display", serif', fontWeight: 'bold', color: '#1e293b', marginBottom: '16px' }}>
+            <h2 style={styles.textTitle}>
               EXPEDIENTE DE ÉXITO
             </h2>
-            <div style={{ height: '2px', backgroundColor: '#b08d57', width: '64px', margin: '0 auto 40px auto' }}></div>
+            <div style={styles.goldDivider}></div>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <div style={styles.flexCol24}>
               <div>
                 <h3 style={styles.portadaSub}>
                   Titular del Logro
                 </h3>
-                <p style={{ fontSize: '24px', fontFamily: '"Playfair Display", serif', fontStyle: 'italic', color: '#334155' }}>
+                <p style={styles.portadaMainTitle}>
                   La mujer de mi vida
                 </p>
               </div>
-              <div style={{ backgroundColor: '#f8fafc', padding: '24px', borderRadius: '12px', borderLeft: '4px solid #b08d57', display: 'inline-block', margin: '0 auto', width: '100%', maxWidth: '380px' }}>
+              <div style={styles.portadaStateContainer}>
                 <p style={styles.portadaStateLabel}>
                   Estado de la Misión:
                 </p>
@@ -335,11 +481,11 @@ const App = () => {
         )}
 
         {activeTab === 'cartas' && (
-          <div style={{ ...styles.card, textAlign: 'left' }}>
-            <p style={{ fontFamily: '"Playfair Display", serif', fontSize: '22px', color: '#334155', fontStyle: 'italic', marginBottom: '32px', borderBottom: '1px solid #f8fafc', paddingBottom: '24px', lineHeight: '1.6' }}>
+          <div style={styles.cardLeft}>
+            <p style={styles.cartaHeader}>
               ”...de las batallas ganadas y las que ya están ganadas sin saberlo,”
             </p>
-            <div style={{ color: '#475569', fontSize: '16px', lineHeight: '1.8', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div style={styles.cartaBody}>
               <p>Te miro y no solo veo a la mujer que amo, veo a la mujer que admiro profundamente. Alguien que no espera que las puertas se abran, sino que construye sus propios caminos.</p>
               <p>Este espacio es para recordarte que cada kilómetro que recorras en tu nueva RAV4 es una extensión de tu brillo. Estás diseñada para cosas grandes.</p>
             </div>
@@ -351,7 +497,7 @@ const App = () => {
 
         {activeTab === 'album' && (
           <div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
+            <div style={styles.gridContainer}>
               {FOTOS_ALBUM.map((foto, i) => {
                 const esUrlValida = foto.startsWith("http");
                 return (
@@ -360,20 +506,20 @@ const App = () => {
                       <img 
                         src={foto} 
                         alt={`Momento ${i + 1}`} 
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        style={styles.imgFull}
                       />
                     ) : (
-                      <div style={{ padding: '20px', textAlign: 'center', color: '#cbd5e1' }}>
+                      <div style={styles.albumPlaceholder}>
                         <ImageIcon style={{ width: '32px', height: '32px', color: '#cbd5e1', margin: '0 auto 8px auto' }} />
-                        <span style={{ fontSize: '10px', color: '#94a3b8', display: 'block' }}>Espacio para foto {i + 1}</span>
+                        <span style={styles.albumPlaceholderText}>Espacio para foto {i + 1}</span>
                       </div>
                     )}
                   </div>
                 );
               })}
             </div>
-            <div style={{ padding: '40px 0', textAlign: 'center' }}>
-              <p style={{ fontFamily: '"Playfair Display", serif', fontStyle: 'italic', color: '#64748b' }}>
+            <div style={styles.albumFooter}>
+              <p style={styles.albumFooterText}>
                 "Cada foto es un fragmento de la historia que seguimos manejando juntas."
               </p>
             </div>
@@ -381,18 +527,18 @@ const App = () => {
         )}
 
         {activeTab === 'video' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-            <div style={{ aspectRatio: '16/9', backgroundColor: '#0f172a', borderRadius: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '8px solid #ffffff', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)', overflow: 'hidden', position: 'relative' }}>
+          <div style={styles.flexCol32}>
+            <div style={styles.videoContainer}>
               {embedVideoUrl ? (
                 <iframe
                   src={embedVideoUrl}
                   title="Video del Evento"
-                  style={{ width: '100%', height: '100%', border: 'none' }}
+                  style={styles.videoIframe}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 ></iframe>
               ) : (
-                <div style={{ textAlign: 'center', color: '#ffffff', padding: '20px' }}>
+                <div style={styles.videoPlaceholder}>
                   <PlayCircle style={{ width: '80px', height: '80px', color: 'rgba(255, 255, 255, 0.4)', margin: '0 auto 16px auto' }} />
                   <p style={styles.videoPlaceholderText}>
                     Aquí aparecerá tu video cuando configures la URL
@@ -401,12 +547,12 @@ const App = () => {
               )}
             </div>
             
-            <div style={{ ...styles.card, padding: '40px' }}>
+            <div style={styles.card}>
               <div style={styles.goldBadge}>
                 Conclusión del Registro
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', paddingTop: '16px' }}>
-                <p style={{ color: '#334155', lineHeight: '1.7', fontSize: '18px', fontWeight: '500', fontStyle: 'italic' }}>
+              <div style={styles.flexCol24}>
+                <p style={styles.conclusionText}>
                   “Este momento no necesita edición ni filtros. Lo que ves aquí es exactamente lo que eres: alguien que merece que la vida le traiga cosas grandes, conducidas con amor, y con quien quiero recorrer cada kilómetro que venga.”
                 </p>
                 <div style={{ height: '1px', backgroundColor: '#f1f5f9', width: '96px', margin: '0 auto' }}></div>
