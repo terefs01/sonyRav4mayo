@@ -175,7 +175,7 @@ const App = () => {
       borderRadius: '9999px',
       fontSize: '10px',
       fontWeight: 'bold',
-      textTransform: 'uppercase',
+      textTransform: 'uppercase' as const,
       letterSpacing: '1px'
     },
     gridItem: {
